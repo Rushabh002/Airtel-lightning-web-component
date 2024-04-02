@@ -1,0 +1,66 @@
+<template>
+    <div data-id="myHeader" class="tabs-container">
+        <div class="tabs-header">
+            <img draggable="false" src="https://assets.airtel.in/static-assets/acp/common/logo-red.svg" alt="Airtel Logo" loading="lazy" class="header-logo" >
+            <div class="tabs-header-scroll-section">
+                <template for:each={tabs} for:item="tab">
+                    <div key={tab.key} class={tab.class} onclick={scrollToDiv} data-tab-index={tab.index}>{tab.label}</div>
+                </template>
+            </div>
+        </div>
+        <div class="recharge-online-container">
+            <div class="tabs-content">
+                <template for:each={recordTypePlans} for:item="recordTypePlan" for:index="recordTypeIndex">
+                    <div key={recordTypePlan.recordType} class="tabs-single-content" data-tab-name={recordTypePlan.recordType} data-tab-index={recordTypeIndex}>
+                        <div class="tabs-section" id={tabsSectionId}>{recordTypePlan.recordType}</div>
+                        <template for:each={recordTypePlan.plans} for:item="plan" for:index="planIndex">
+                            <div key={plan.Value} class="tabs-component">
+                                <div class="packs-card-container">
+                                    <div class="pack-card-container">
+                                        <div class="pack-card-content">
+                                            <div class="pack-card-left-section">
+                                                <div class="pack-card-details">
+                                                    <div class="pack-card-detail">
+                                                        <h4 class="pack-card-heading">₹{plan.Plan_Value__c}</h4>
+                                                    </div>
+                                                    <div class="pack-card-detail">
+                                                        <h4 class="pack-card-heading"></h4>
+                                                        <h6 class="pack-card-sub-heading">{plan.Data__c}</h6>
+                                                    </div>
+                                                    <div class="pack-card-detail">
+                                                        <h4 class="pack-card-heading">{plan.Validity__c}</h4>
+                                                        <h6 class="pack-card-sub-heading">validity</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="pack-card-right-section">
+                                                <button data-testid="buttonComponent" type="button" name="buttonComponent" id="buttonComponent" class="btn fit">₹{plan.Plan_Value__c}</button>
+                                                <!-- Pass plan details to the method -->
+                                                <button data-plan-value={plan.Plan_Value__c} data-plan-data={plan.Data__c} data-plan-validity={plan.Validity__c} onclick={showPopup} class="btn clear fit secondary">View Detail</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <div id="popup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <button onclick={hidePopup} class="close-btn">X</button>
+            <h1>Benefits</h1><br>
+            <h3>Plan Value:</h3>
+            <h6>₹{popupPlanValue}</h6><br>
+            <h3>Data:</h3>
+            <h6>{popupPlanData}</h6><br>
+            <h3>Validity:</h3>
+            <h6>{popupPlanValidity}</h6><br>
+            <!-- Add more plan details here if needed -->
+            <button data-testid="buttonComponent" type="button" name="buttonComponent" id="buttonComponen" class="btn fit">Get Plan</button>
+        </div>
+    </div>
+</template>
