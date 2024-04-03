@@ -1,6 +1,7 @@
 import { LightningElement, wire,track } from 'lwc';
 import fetchRecordTypeNames from '@salesforce/apex/PlanController.fetchRecordTypeNames';
 import getPlansByRecordTypes from '@salesforce/apex/PlanController.getPlansByRecordTypes';
+import createOrderLineRecord from '@salesforce/apex/OrderController.createOrderLineRecord';
 
 export default class PlanDetails extends LightningElement {
     recordTypeNames = [];
@@ -12,24 +13,44 @@ export default class PlanDetails extends LightningElement {
     @track popupPlanValidity;
     
 
+    createOrderLine(event) {
+      
+        const planValue = parseFloat(event.target.dataset.planValue);
+        const planId = event.target.dataset.planId;
+        
+        console.log('Plan Value:', planValue);
+        console.log('Plan Id:', planId);
+
+        
+        createOrderLineRecord({ planAmount: planValue, planId: planId })
+            .then(result => {
+               
+                console.log('Order Line record created successfully.');
+            })
+            .catch(error => {
+              
+                console.error('Error creating Order Line record:', error);
+            });
+    }
+
     showPopup(event) {
-            // Retrieve plan details from button's data attributes
+          
             this.popupPlanValue = event.target.dataset.planValue;
             this.popupPlanData = event.target.dataset.planData;
             this.popupPlanValidity = event.target.dataset.planValidity;
 
-            // Show the popup
+        
             const popup = this.template.querySelector('.popup');
             popup.style.display = 'block';
         }
 
-        // Method to hide the popup
+       
         hidePopup() {
-            // Hide the popup
+         
             const popup = this.template.querySelector('.popup');
             popup.style.display = 'none';
         }
-    
+        
     // Call the fetchRecordTypeNames Apex method wire adapter to fetch data
     @wire(fetchRecordTypeNames)
     wiredRecordTypeNames({ error, data }) {
