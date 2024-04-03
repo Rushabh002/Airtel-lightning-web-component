@@ -38,8 +38,7 @@ export default class PlanDetails extends LightningElement {
             this.popupPlanValue = event.target.dataset.planValue;
             this.popupPlanData = event.target.dataset.planData;
             this.popupPlanValidity = event.target.dataset.planValidity;
-
-        
+  
             const popup = this.template.querySelector('.popup');
             popup.style.display = 'block';
         }
