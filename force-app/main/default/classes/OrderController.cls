@@ -15,44 +15,7 @@ public with sharing class OrderController {
             System.debug(orderLine);
             insert orderLine;
             
-
-            Plan__c plan = [SELECT Plan_Value__c, Validity__c, Data__c, SMS__c, Talktime__c, Calls__c,Details__c FROM Plan__c WHERE Plan_Value__c = :planAmount LIMIT 1];
-
-            System.debug(plan);   
-            String userEmail = [SELECT Email FROM User WHERE Id = :UserInfo.getUserId()].Email;
-            
-            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-            email.setToAddresses(new List<String>{userEmail});
-            email.setSubject('Order Line Created Successfully');
-            
-
-            String emailBody = 'Your Order Line has been created successfully.\n\n';
-            emailBody += 'Plan Details \n';
-            emailBody += 'Plan Value: ' + plan.Plan_Value__c;
-            
-            if(plan.Validity__c != null) {
-                emailBody += '\nValidity: ' + plan.Validity__c;
-            }
-            if(plan.Data__c != null) {
-                emailBody += '\nData: ' + plan.Data__c;
-            }
-            if(plan.SMS__c != null) {
-                emailBody += '\nSms: ' + plan.SMS__c;
-            }
-            if(plan.Talktime__c != null) {
-                emailBody += '\nTalktime: ' + plan.Talktime__c;
-            }
-            if(plan.Calls__c != null) {
-                emailBody += '\nCalls: ' + plan.Calls__c;
-            }
-            if(plan.Details__c != null) {
-                emailBody += '\nCalls: ' + plan.Details__c;
-            }
-            
-            email.setPlainTextBody(emailBody);
-            
-            Messaging.sendEmail(new List<Messaging.Email>{email});
-            
+            OrderEmailHandler.sendOrderEmail(planAmount, planId,orderLine.Id);
         } catch (Exception e) {
             throw new AuraHandledException('Error creating Order Line record: ' + e.getMessage());
         }

@@ -35,8 +35,6 @@
                                             </div>
                                             <div class="pack-card-right-section">
                                                 <button data-plan-value={plan.Plan_Value__c} data-plan-id={plan.Id} onclick={createOrderLine} class="btn fit">₹{plan.Plan_Value__c}</button>
-
-                                                <!-- Pass plan details to the method -->
                                                 
                                                 <button data-plan-value={plan.Plan_Value__c} data-plan-data={plan.Data__c} data-plan-validity={plan.Validity__c} onclick={showPopup} class="btn clear fit secondary">View Detail</button>
                                             </div>
@@ -61,7 +59,7 @@
             <h6>{popupPlanData}</h6><br>
             <h3>Validity:</h3>
             <h6>{popupPlanValidity}</h6><br>
-            <!-- Add more plan details here if needed -->
+            
             <button type="button" class="btn fit">Get Plan</button>
 
         </div>

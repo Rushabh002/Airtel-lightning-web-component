@@ -241,13 +241,13 @@ button {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-    padding: 32px; /* Adjusted padding for maintaining proportions */
-    width: 350px; /* Reduced width by 20% */
-    height: 350px; /* Reduced height by 20% */
-    max-width: 90%; /* Adjust maximum width as needed */
-    max-height: 90%; /* Adjust maximum height as needed */
-    overflow: auto; /* Add overflow:auto to enable scrolling if content exceeds popup size */
-    z-index: 9999; /* Ensure popup is above other content */
+    padding: 32px;
+    width: 350px;
+    height: 350px; 
+    max-width: 90%; 
+    max-height: 90%;
+    overflow: auto; 
+    z-index: 9999; 
 }
 .popup-content {
     text-align: left;
