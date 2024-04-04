@@ -1,0 +1,14 @@
+<template>
+    <div class="popup-content">
+        <button onclick={handleCloseClick} class="close-btn">X</button>
+        <h1>Benefits</h1><br>
+        <h3>Plan Value:</h3>
+        <h6>₹{plan.Plan_Value__c}</h6><br>
+        <h3>Data:</h3>
+        <h6>{plan.Data__c}</h6><br>
+        <h3>Validity:</h3>
+        <h6>{plan.Validity__c}</h6><br>
+        
+        <button type="button" class="btn fit">Get Plan</button>
+    </div>
+</template>

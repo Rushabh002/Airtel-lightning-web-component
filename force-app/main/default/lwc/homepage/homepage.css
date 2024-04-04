@@ -161,6 +161,7 @@ a, h1, h2, h3, h4, h5, h6, ol, p, ul {
     display: flex;
 }
 .packs-card-container .pack-card-container .pack-card-content .pack-card-left-section .pack-card-details .pack-card-detail .pack-card-sub-heading {
+    /* @sldsValidatorIgnore */
     font-size: 10px;
     letter-spacing: .5px;
     color: #777;
@@ -182,6 +183,7 @@ a, h1, h2, h3, h4, h5, h6, ol, p, ul {
     height: -webkit-fit-content;
     height: -moz-fit-content;
     height: fit-content;
+    /* @sldsValidatorIgnore */
     white-space: nowrap;
 }
 @media (min-width: 768px){
@@ -203,6 +205,7 @@ a, h1, h2, h3, h4, h5, h6, ol, p, ul {
     outline: none;
     cursor: pointer;
     letter-spacing: .8px;
+    /* @sldsValidatorIgnore */
     white-space: nowrap;
 }
 button {
@@ -216,6 +219,7 @@ button {
 }
 .btn.clear {
     color: #e40000;
+    /* @sldsValidatorIgnore */
     font-size: 12px;
     font-weight: 600;
     line-height: 18px;
@@ -228,6 +232,7 @@ button {
     height: -webkit-fit-content;
     height: -moz-fit-content;
     height: fit-content;
+    /* @sldsValidatorIgnore */
     white-space: nowrap;
 }
 @media (min-width: 768px){
@@ -260,4 +265,12 @@ button {
     border: none;
     font-size: 20px;
     cursor: pointer;
+}
+.my-custom-class {
+    display: block;
+    /* Add other styles as needed */
+}
+.my-custom {
+    display: none;
+    /* Add other styles as needed */
 }

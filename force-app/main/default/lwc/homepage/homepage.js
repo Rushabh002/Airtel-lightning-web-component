@@ -8,48 +8,22 @@ export default class PlanDetails extends LightningElement {
     tabs = [];
     selectedRecordType;
     plansByRecordType;
-    @track popupPlanValue;
-    @track popupPlanData;
-    @track popupPlanValidity;
+    @track popupPlan = {};
     
 
-    createOrderLine(event) {
-      
-        const planValue = parseFloat(event.target.dataset.planValue);
-        const planId = event.target.dataset.planId;
-        
-        console.log('Plan Value:', planValue);
-        console.log('Plan Id:', planId);
-
-        
-        createOrderLineRecord({ planAmount: planValue, planId: planId })
-            .then(result => {
-               
-                console.log('Order Line record created successfully.');
-            })
-            .catch(error => {
-              
-                console.error('Error creating Order Line record:', error);
-            });
-    }
-
     showPopup(event) {
-          
-            this.popupPlanValue = event.target.dataset.planValue;
-            this.popupPlanData = event.target.dataset.planData;
-            this.popupPlanValidity = event.target.dataset.planValidity;
-  
-            const popup = this.template.querySelector('.popup');
-            popup.style.display = 'block';
-        }
-
        
-        hidePopup() {
-         
-            const popup = this.template.querySelector('.popup');
-            popup.style.display = 'none';
-        }
-        
+        this.popupPlan = {
+            Plan_Value__c: event.target.dataset.planValue,
+            Data__c: event.target.dataset.planData,
+            Validity__c: event.target.dataset.planValidity 
+                };
+                
+        const divElement = this.template.querySelector(".popup");
+        divElement.classList.remove('my-custom');
+        divElement.classList.add('my-custom-class');
+    }
+   
     @wire(fetchRecordTypeNames)
     wiredRecordTypeNames({ error, data }) {
         if (data) {
@@ -93,6 +67,25 @@ export default class PlanDetails extends LightningElement {
             }));
         }
         return [];
+    }
+    createOrderLine(event) {
+      
+        const planValue = parseFloat(event.target.dataset.planValue);
+        const planId = event.target.dataset.planId;
+        
+        console.log('Plan Value:', planValue);
+        console.log('Plan Id:', planId);
+
+        
+        createOrderLineRecord({ planAmount: planValue, planId: planId })
+            .then(result => {
+               
+                console.log('Order Line record created successfully.');
+            })
+            .catch(error => {
+              
+                console.error('Error creating Order Line record:', error);
+            });
     }
 
     scrollToDiv(event) {
