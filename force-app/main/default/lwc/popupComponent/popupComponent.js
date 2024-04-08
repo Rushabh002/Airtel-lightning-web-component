@@ -1,10 +1,15 @@
 import { LightningElement, api } from 'lwc';
 
 export default class PopupComponent extends LightningElement {
-    @api plan; 
+    @api selectedPlan;
+    @api showOtherDetails = false;
 
+    handleCloseClick() {
+        this.showOtherDetails = false;
+    }
 
-    hidePopup() {
-        this.popupStyle = 'display: none;';
+    @api showPlan(){
+        console.log("In other detail..", this.selectedPlan);
+        this.showOtherDetails = true;
     }
 }

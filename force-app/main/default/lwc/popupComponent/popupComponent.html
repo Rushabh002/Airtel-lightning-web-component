@@ -1,14 +1,106 @@
-<template>
-    <div class="popup-content">
-        <button onclick={handleCloseClick} class="close-btn">X</button>
-        <h1>Benefits</h1><br>
-        <h3>Plan Value:</h3>
-        <h6>₹{plan.Plan_Value__c}</h6><br>
-        <h3>Data:</h3>
-        <h6>{plan.Data__c}</h6><br>
-        <h3>Validity:</h3>
-        <h6>{plan.Validity__c}</h6><br>
-        
-        <button type="button" class="btn fit">Get Plan</button>
-    </div>
+<template >
+    <template if:true={showOtherDetails}>
+        <div class="modal-container active" data-testid="modalContainer">
+            <div class="modal-backdrop" data-testid="modalBackdrop"></div>
+            <div class="modal-content " data-testid="modalContent">
+                <div class="modal-header">
+                    <h3 class="modal-heading" data-testid="modalHeading">Benefits</h3>
+                    <button class="modal-cross-btn" data-testid="modalCrossBtn" onclick={handleCloseClick}></button>
+                </div>
+                <div class="modal-body" data-testid="modalBody">
+                    <div class="view-benefits-container">
+                        <div class="view-benefits-content">
+                            <label class="view-benefits-label">PLAN VALUE</label>
+                            <div class="plan-price-details ">
+                                <h3 class="view-benefits-price">{selectedPlan.plan.Plan_Value__c}</h3>
+                            </div>
+                            <div class="view-benefits-pack-details other-list">
+                                <template if:true={selectedPlan.plan.Data__c}>
+                                    <div class="view-benefits-pack-detail">
+                                        <h4 class="view-benefits-pack-heading">Data</h4>
+                                        <h6 class="view-benefits-pack-sub-heading">{selectedPlan.plan.Data__c}</h6>
+                                    </div>
+                                </template>
+                                <template if:true={selectedPlan.plan.Calls__c}>
+                                    <div class="view-benefits-pack-detail">
+                                        <h4 class="view-benefits-pack-heading">Calls</h4>
+                                        <h6 class="view-benefits-pack-sub-heading">{selectedPlan.plan.Calls__c}</h6>
+                                    </div>
+                                </template>
+                                <template if:true={selectedPlan.plan.Validity__c}>
+                                    <div class="view-benefits-pack-detail">
+                                        <h4 class="view-benefits-pack-heading">Validity</h4>
+                                        <h6 class="view-benefits-pack-sub-heading">{selectedPlan.plan.Validity__c}</h6>
+                                    </div>
+                                </template>
+                                <template if:true={selectedPlan.plan.Details__c}>
+                                    <div class="view-benefits-pack-detail">
+                                        <h4 class="view-benefits-pack-heading">Details</h4>
+                                        <h6 class="view-benefits-pack-sub-heading">{selectedPlan.plan.Details__c}</h6>
+                                    </div>
+                                </template>
+                                <template if:true={selectedPlan.plan.SMS__c}>
+                                    <div class="view-benefits-pack-detail">
+                                        <h4 class="view-benefits-pack-heading">SMS</h4>
+                                        <h6 class="view-benefits-pack-sub-heading">{selectedPlan.plan.SMS__c}</h6>
+                                    </div>
+                                </template>
+                                <template if:true={selectedPlan.plan.Talktime__c}>
+                                    <div class="view-benefits-pack-detail">
+                                        <h4 class="view-benefits-pack-heading">Talktime</h4>
+                                        <h6 class="view-benefits-pack-sub-heading">{selectedPlan.plan.Talktime__c}</h6>
+                                    </div>
+                                </template>
+                            </div>
+                            <template if:true={selectedPlan.additionalBenefits}>
+                                <h4 class="view-benefits-heading">Additional Benefit(s)</h4>
+                                <ul class="view-benefits-pack-benefits">
+                                    <template for:each={selectedPlan.additionalBenefits} for:item="benefit" for:index="benefitIndex">
+                                        <li key={benefit.Id} class="view-benefits-pack-benefit">
+                                            <div class="left-section">
+                                                <img draggable="false" src={benefit.Icon__c} alt={benefit.Name__c} loading="lazy" height="48" width="48">
+                                            </div>
+                                            <div class="right-section">
+                                                <template if:true={benefit.Name__c}><h4>{benefit.Name__c}</h4></template>
+                                                <template if:true={benefit.Company_Name__c}><h6>{benefit.Company_Name__c}</h6></template>
+                                                <template if:true={benefit.Details__c}><p>{benefit.Details__c}</p></template>
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </template>
+                            <div class="view-benefits-other-details">
+                                <h4 class="view-benefits-other-details-heading active">Other Details</h4>
+                                <ul class="view-benefits-other-details-list">
+                                    <template if:true={selectedPlan.plan.SMSTarrifID__r}>
+                                        <li class="view-benefits-other-details-item">
+                                            <b>sms tariff:&nbsp;</b>
+                                            <span>{selectedPlan.plan.SMSTarrifID__r.Description__c}</span>
+                                        </li>
+                                    </template>
+                                    <template if:true={selectedPlan.plan.DataTarrifID__r}>
+                                        <li class="view-benefits-other-details-item">
+                                            <b>data speed:&nbsp;</b>
+                                            <span>{selectedPlan.plan.DataTarrifID__r.Description__c}</span>
+                                        </li>
+                                    </template>
+                                    <template if:true={selectedPlan.plan.TncID__r}>
+                                        <li class="view-benefits-other-details-item">
+                                            <b>tnc:&nbsp;</b>
+                                            <span>
+                                                <a href={selectedPlan.plan.TncID__r.Description__c}>{selectedPlan.plan.TncID__r.Description__c}</a>
+                                            </span>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="view-benefits-footer">
+                            <button data-testid="buttonComponent" type="button" name="buttonComponent" id="buttonComponent" class="btn ">GET PLAN</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
 </template>

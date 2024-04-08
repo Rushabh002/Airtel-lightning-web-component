@@ -22,26 +22,29 @@
                                             <div class="pack-card-left-section">
                                                 <div class="pack-card-details">
                                                     <div class="pack-card-detail">
-                                                        <h4 class="pack-card-heading">₹{plan.Plan_Value__c}</h4>
+                                                        <h4 class="pack-card-heading">₹{plan.plan.Plan_Value__c}</h4>
                                                     </div>
                                                     <div class="pack-card-detail">
                                                         <h4 class="pack-card-heading"></h4>
-                                                        <h6 class="pack-card-sub-heading">{plan.Data__c}</h6>
+                                                        <h6 class="pack-card-sub-heading">{plan.plan.Data__c}</h6>
                                                     </div>
                                                     <div class="pack-card-detail">
-                                                        <h4 class="pack-card-heading">{plan.Validity__c}</h4>
+                                                        <h4 class="pack-card-heading">{plan.plan.Validity__c}</h4>
                                                         <h6 class="pack-card-sub-heading">validity</h6>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="pack-card-right-section">
-                                                <button data-plan-value={plan.Plan_Value__c} data-plan-id={plan.Id} onclick={createOrderLine} class="btn fit">₹{plan.Plan_Value__c}</button>
+                                                <button data-plan-value={plan.plan.Plan_Value__c} data-plan-id={plan.plan.Id} onclick={createOrderLine} class="btn fit">₹{plan.plan.Plan_Value__c}</button>
                                                 
-                                                <button data-plan-value={plan.Plan_Value__c} data-plan-data={plan.Data__c} data-plan-validity={plan.Validity__c} onclick={showPopup} class="btn clear fit secondary">View Detail</button>
+                                                <button data-plan-value={plan.plan.Plan_Value__c} data-plan-data={plan.plan.Data__c} data-plan-validity={plan.plan.Validity__c} onclick={handleViewDetail} data-target-id={plan.plan.Id} class="btn clear fit secondary">View Detail</button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div key={plan.plan.Id} data-id={plan.plan.Id}>
+                                <c-popup-component onclose={hidePopup} selected-plan={plan}></c-popup-component>
                             </div>
                         </template>
                     </div>
@@ -49,10 +52,5 @@
             </div>
         </div>
     </div>
-    <div id="popup" class="popup my-custom ">
-    <c-popup-component 
-    plan={popupPlan} 
-    onclose={hidePopup}
-    ></c-popup-component>
-    </div>
+   
 </template>

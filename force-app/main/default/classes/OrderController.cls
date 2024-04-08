@@ -15,6 +15,7 @@ public with sharing class OrderController {
             System.debug(orderLine);
             insert orderLine;
             
+            
             OrderEmailHandler.sendOrderEmail(planAmount, planId,orderLine.Id);
         } catch (Exception e) {
             throw new AuraHandledException('Error creating Order Line record: ' + e.getMessage());

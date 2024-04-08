@@ -1,4 +1,5 @@
-import { LightningElement, wire,track } from 'lwc';
+import { LightningElement, wire,track,api } from 'lwc';
+import PopupComponent from 'c/popupComponent';
 import fetchRecordTypeNames from '@salesforce/apex/PlanController.fetchRecordTypeNames';
 import getPlansByRecordTypes from '@salesforce/apex/PlanController.getPlansByRecordTypes';
 import createOrderLineRecord from '@salesforce/apex/OrderController.createOrderLineRecord';
@@ -9,30 +10,23 @@ export default class PlanDetails extends LightningElement {
     selectedRecordType;
     plansByRecordType;
     @track popupPlan = {};
-    
+    @api planId;
 
-    showPopup(event) {
-       
-        this.popupPlan = {
-            Plan_Value__c: event.target.dataset.planValue,
-            Data__c: event.target.dataset.planData,
-            Validity__c: event.target.dataset.planValidity 
-                };
-                
-        const divElement = this.template.querySelector(".popup");
-        divElement.classList.remove('my-custom');
-        divElement.classList.add('my-custom-class');
+    
+    handleViewDetail(event) {
+        console.log("Hii");
+        this.planId = event.target.dataset.targetId;
+        console.log(this.planId);
+        this.template.querySelector(`[data-id="${this.planId}"]`).querySelector('c-popup-component').showPlan();
     }
-   
+    
     @wire(fetchRecordTypeNames)
     wiredRecordTypeNames({ error, data }) {
         if (data) {
           
             this.recordTypeNames = data;
-
             
             const sequence = ['Data', 'Truly Unlimited', 'Entertainment', 'Talktime (top up voucher)', 'International Roaming', 'Inflight Roaming packs', 'Plan Vouchers'];
-
            
             this.tabs = sequence.map(name => ({
                 key: name, 
@@ -50,6 +44,8 @@ export default class PlanDetails extends LightningElement {
     wiredRecordTypeDetails({ error, data }) {
         if (data) {
             this.plansByRecordType = data;
+            console.log('data:', data);
+
         } else if (error) {
             console.error('Error:', error);
         }
@@ -70,7 +66,7 @@ export default class PlanDetails extends LightningElement {
     }
     createOrderLine(event) {
       
-        const planValue = parseFloat(event.target.dataset.planValue);
+        const planValue = event.target.dataset.planValue;
         const planId = event.target.dataset.planId;
         
         console.log('Plan Value:', planValue);
