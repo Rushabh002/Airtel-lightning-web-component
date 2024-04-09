@@ -15,8 +15,16 @@ public with sharing class OrderController {
             System.debug(orderLine);
             insert orderLine;
             
+
+            Order order = new Order();
+            order.AccountId = '001GB00003ARvGaYAL';
+            order.EffectiveDate = Date.today();
+            order.Status = 'Draft';
+            order.Order_Line__c = orderLine.Id;
+            insert order;
+
             
-            OrderEmailHandler.sendOrderEmail(planAmount, planId,orderLine.Id);
+            // OrderEmailHandler.sendOrderEmail(planAmount, planId,orderLine.Id);
         } catch (Exception e) {
             throw new AuraHandledException('Error creating Order Line record: ' + e.getMessage());
         }
